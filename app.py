@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask,request, render_template
 import pandas as pd
 import numpy as np
@@ -112,8 +114,20 @@ def predict():
             'children': [children],
             'smoker': [smoker]
         })
-
         prediction = pipeline.predict(input_data)
+        if (prediction < 0):
+            prediction = 0
+
+        input_data['charges'] = prediction
+
+        # Check if the CSV file exists
+        if os.path.isfile("output.csv"):
+            # Append new data to the existing CSV file
+            input_data.to_csv("output.csv", mode='a', header=False, index=False)
+        else:
+            # Create a new CSV file with the data
+            input_data.to_csv("output.csv", mode='w', header=True, index=False)
+
         return prediction[0]
 
 
