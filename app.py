@@ -115,10 +115,10 @@ def predict():
             'smoker': [smoker]
         })
         prediction = pipeline.predict(input_data)
-        if (prediction < 0):
-            prediction = 0
+        if (prediction[0] < 0):
+            prediction[0] = 0
 
-        input_data['charges'] = prediction
+        input_data['charges'] = prediction[0]
 
         # Check if the CSV file exists
         if os.path.isfile("output.csv"):
@@ -149,11 +149,8 @@ def predict():
 
     predicted_charges = predict_charges(age, sex, bmi, children, smoker)
 
-    if (predicted_charges < 0):
-        predicted_charges = 0
-
     a = f'Your Predicted Charges: ${predicted_charges:.2f}'
-
+    print(predicted_charges)
 
 
 
