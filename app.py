@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask,request, render_template
+from flask import Flask, request, render_template, render_template_string
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -160,7 +160,7 @@ def predict():
 #//////////////////////////////////////////////////////////////
 
 
-    return a
+    return render_template('result.html', my_string=a)
 
 if __name__ == '__main__':
     app.run(port=3000, debug=True)
